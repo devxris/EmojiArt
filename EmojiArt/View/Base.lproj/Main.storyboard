@@ -80,14 +80,20 @@
                                 <subviews>
                                     <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcM-xr-DSw">
                                         <rect key="frame" x="0.0" y="0.0" width="703.5" height="748"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" priority="250" constant="748" id="LQR-Le-GkA"/>
+                                            <constraint firstAttribute="width" priority="250" constant="703.5" id="exs-qs-xBv"/>
+                                        </constraints>
                                     </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="kcM-xr-DSw" firstAttribute="leading" secondItem="WUJ-5A-O7S" secondAttribute="leading" id="I2a-Kg-TgK"/>
-                                    <constraint firstAttribute="trailing" secondItem="kcM-xr-DSw" secondAttribute="trailing" id="PxP-vF-XFQ"/>
-                                    <constraint firstAttribute="bottom" secondItem="kcM-xr-DSw" secondAttribute="bottom" id="cAk-aq-rDc"/>
-                                    <constraint firstItem="kcM-xr-DSw" firstAttribute="top" secondItem="WUJ-5A-O7S" secondAttribute="top" id="smW-vY-enC"/>
+                                    <constraint firstItem="kcM-xr-DSw" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="WUJ-5A-O7S" secondAttribute="leading" id="I2a-Kg-TgK"/>
+                                    <constraint firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="kcM-xr-DSw" secondAttribute="trailing" id="PxP-vF-XFQ"/>
+                                    <constraint firstItem="kcM-xr-DSw" firstAttribute="centerY" secondItem="WUJ-5A-O7S" secondAttribute="centerY" id="XJA-qM-cSG"/>
+                                    <constraint firstItem="kcM-xr-DSw" firstAttribute="centerX" secondItem="WUJ-5A-O7S" secondAttribute="centerX" id="Zhe-Lh-cYK"/>
+                                    <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="kcM-xr-DSw" secondAttribute="bottom" id="cAk-aq-rDc"/>
+                                    <constraint firstItem="kcM-xr-DSw" firstAttribute="top" relation="greaterThanOrEqual" secondItem="WUJ-5A-O7S" secondAttribute="top" id="smW-vY-enC"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -103,6 +109,8 @@
                     <connections>
                         <outlet property="dropZone" destination="WUJ-5A-O7S" id="s0O-b3-aqO"/>
                         <outlet property="scrollView" destination="kcM-xr-DSw" id="48K-3c-kjh"/>
+                        <outlet property="scrollViewHeight" destination="LQR-Le-GkA" id="FWn-6L-Nk9"/>
+                        <outlet property="scrollViewWidth" destination="exs-qs-xBv" id="DWz-uu-Ewb"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
