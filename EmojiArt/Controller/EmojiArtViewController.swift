@@ -48,6 +48,7 @@ class EmojiArtViewController: UIViewController {
 		didSet {
 			emojiCollectionView.dataSource = self
 			emojiCollectionView.delegate = self
+			emojiCollectionView.dragDelegate = self // embedded drag delegate to UICollectionView
 		}
 	}
 	
@@ -104,10 +105,33 @@ extension EmojiArtViewController: UICollectionViewDataSource, UICollectionViewDe
 	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiCell", for: indexPath)
 		if let emojiCell = cell as? EmojiCollectionViewCell {
-			let attributedText = NSAttributedString(string: emojis[indexPath.item], attributes: [.font: font])
+ 			let attributedText = NSAttributedString(string: emojis[indexPath.item], attributes: [.font: font])
 			emojiCell.label.attributedText = attributedText
 		}
 		return cell
+	}
+}
+
+// MARK: UICollectionViewDragDelegate
+
+extension EmojiArtViewController: UICollectionViewDragDelegate {
+	
+	private func dragItem(at indexPath: IndexPath) -> [UIDragItem] {
+		if let attributedString = (emojiCollectionView.cellForItem(at: indexPath) as? EmojiCollectionViewCell)?.label.attributedText {
+			let dragItem = UIDragItem(itemProvider: NSItemProvider(object: attributedString)) // between apps drag
+			dragItem.localObject = attributedString // within apps drag
+			return [dragItem]
+		} else {
+			return []
+		}
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] { // required delegate method
+		return dragItem(at: indexPath)
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] { // drag multiple items optional delegate method 
+		return dragItem(at: indexPath)
 	}
 }
 
