@@ -49,6 +49,7 @@ class EmojiArtViewController: UIViewController {
 			emojiCollectionView.dataSource = self
 			emojiCollectionView.delegate = self
 			emojiCollectionView.dragDelegate = self // embedded drag delegate to UICollectionView
+			emojiCollectionView.dropDelegate = self // embedded drop delegate to UICollectionView
 		}
 	}
 	
@@ -119,7 +120,7 @@ extension EmojiArtViewController: UICollectionViewDragDelegate {
 	private func dragItem(at indexPath: IndexPath) -> [UIDragItem] {
 		if let attributedString = (emojiCollectionView.cellForItem(at: indexPath) as? EmojiCollectionViewCell)?.label.attributedText {
 			let dragItem = UIDragItem(itemProvider: NSItemProvider(object: attributedString)) // between apps drag
-			dragItem.localObject = attributedString // within apps drag
+			dragItem.localObject = attributedString // within apps drag, configure for below perform drop usage
 			return [dragItem]
 		} else {
 			return []
@@ -127,11 +128,75 @@ extension EmojiArtViewController: UICollectionViewDragDelegate {
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, itemsForBeginning session: UIDragSession, at indexPath: IndexPath) -> [UIDragItem] { // required delegate method
+		// configure the localContext for below drop didUpdate know its within collectionView
+		session.localContext = collectionView
 		return dragItem(at: indexPath)
 	}
 	
 	func collectionView(_ collectionView: UICollectionView, itemsForAddingTo session: UIDragSession, at indexPath: IndexPath, point: CGPoint) -> [UIDragItem] { // drag multiple items optional delegate method 
 		return dragItem(at: indexPath)
+	}
+}
+
+// MARK: UICollectionViewDropDelegate
+
+extension EmojiArtViewController: UICollectionViewDropDelegate {
+	
+	func collectionView(_ collectionView: UICollectionView, canHandle session: UIDropSession) -> Bool {
+		return session.canLoadObjects(ofClass: NSAttributedString.self)
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, dropSessionDidUpdate session: UIDropSession, withDestinationIndexPath destinationIndexPath: IndexPath?) -> UICollectionViewDropProposal {
+		// check if the drag item whether from within collectionView or not
+		let isSelf = (session.localDragSession?.localContext as? UICollectionView) == collectionView
+		return UICollectionViewDropProposal(operation: isSelf ? .move : .copy,
+											intent: .insertAtDestinationIndexPath)
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, performDropWith coordinator: UICollectionViewDropCoordinator) { // required delegate method
+		
+		/* must update the model here, drop happens from a. within collectionView b. other apps or elsewhere */
+		
+		// check out the destination to be dropped
+		let destinationIndexPath = coordinator.destinationIndexPath ?? IndexPath(item: 0, section: 0)
+		
+		// check out all the items in coordinator
+		for item in coordinator.items {
+			
+			// drop from local
+			if let sourceIndexPath = item.sourceIndexPath {
+				if let attributedString = item.dragItem.localObject as? NSAttributedString {
+					collectionView.performBatchUpdates({ // for multiple items in-sync
+						// update the model
+						emojis.remove(at: sourceIndexPath.item)
+						emojis.insert(attributedString.string, at: destinationIndexPath.item)
+						// update the collectionView
+						collectionView.deleteItems(at: [sourceIndexPath])
+						collectionView.insertItems(at: [destinationIndexPath])
+					})
+					// to peform drop animation
+					coordinator.drop(item.dragItem, toItemAt: destinationIndexPath)
+				}
+				
+			/* drop from global & insert, might be time-consuming async, utlizing placeholder cell in collectionView
+			   also set prototype cell in storyboard, better with activity indicator */
+			} else {
+				let placeholderContext = coordinator.drop(item.dragItem, to: UICollectionViewDropPlaceholder(insertionIndexPath: destinationIndexPath,
+												    reuseIdentifier: "DropPlaceholderCell"))
+				item.dragItem.itemProvider.loadObject(ofClass: NSAttributedString.self, completionHandler: { (provider, error) in // execute off the main queue
+					DispatchQueue.main.async {
+						if let attributedString = provider as? NSAttributedString {
+							placeholderContext.commitInsertion(dataSourceUpdates: { (insertionIndexPath) in
+								// update the model where to be inserted
+								self.emojis.insert(attributedString.string, at: insertionIndexPath.item)
+							})
+						} else {
+							placeholderContext.deletePlaceholder() // if something wrong, delete placeholder
+						}
+					}
+				})
+			}
+		}
 	}
 }
 
