@@ -18,11 +18,43 @@ class EmojiArtViewController: UIViewController {
 		}
 	}
 	
-	@IBOutlet weak var emojiArtView: EmojiArtView!
+	private var emojiArtView = EmojiArtView()
+	
+	@IBOutlet weak var scrollView: UIScrollView! {
+		didSet {
+			scrollView.minimumZoomScale = 0.1
+			scrollView.maximumZoomScale = 5.0
+			scrollView.delegate = self
+			scrollView.addSubview(emojiArtView)
+		}
+	}
 	
 	// MARK: Properties
 	
 	var imageFetcher: ImageFetcher!
+	
+	var emojiBackgroundImage: UIImage? {
+		get {
+			return emojiArtView.backgroundImage
+		}
+		set {
+			scrollView?.zoomScale = 1.0
+			emojiArtView.backgroundImage = newValue
+			let size = newValue?.size ?? .zero
+			emojiArtView.frame = CGRect(origin: .zero, size: size)
+			scrollView.contentSize = size
+			if let dropZone = self.dropZone, size.width > 0, size.height > 0 {
+				scrollView?.zoomScale = max(dropZone.bounds.size.width / size.width,
+										    dropZone.bounds.size.height / size.height)
+			}
+		}
+	}
+}
+
+// MARK: UIScrollViewDelegate
+
+extension EmojiArtViewController: UIScrollViewDelegate {
+	func viewForZooming(in scrollView: UIScrollView) -> UIView? { return emojiArtView }
 }
 
 // MARK: UIDropInteractionDelegate
@@ -44,7 +76,7 @@ extension EmojiArtViewController: UIDropInteractionDelegate {
 		
 		imageFetcher = ImageFetcher() { (url, image) in // off the main queue
 			DispatchQueue.main.async {
-				self.emojiArtView.backgroundImage = image
+				self.emojiBackgroundImage = image
 			}
 		}
 		

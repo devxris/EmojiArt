@@ -45,4 +45,13 @@ class EmojiArtDocumentTableViewController: UITableViewController {
 			tableView.deleteRows(at: [indexPath], with: .fade) // in-sync with model
 		}
 	}
+	
+	// MARK: UISplitViewController preferred display mode
+	
+	override func viewWillLayoutSubviews() {
+		super.viewWillLayoutSubviews()
+		if splitViewController?.preferredDisplayMode != .primaryOverlay {
+			splitViewController?.preferredDisplayMode = .primaryOverlay
+		}
+	} 
 }

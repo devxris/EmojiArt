@@ -78,17 +78,16 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="WUJ-5A-O7S" userLabel="Drop Zone">
                                 <rect key="frame" x="0.0" y="20" width="703.5" height="748"/>
                                 <subviews>
-                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="DW6-uo-9cM" customClass="EmojiArtView" customModule="EmojiArt" customModuleProvider="target">
+                                    <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="kcM-xr-DSw">
                                         <rect key="frame" x="0.0" y="0.0" width="703.5" height="748"/>
-                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                    </view>
+                                    </scrollView>
                                 </subviews>
                                 <color key="backgroundColor" cocoaTouchSystemColor="groupTableViewBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstItem="DW6-uo-9cM" firstAttribute="leading" secondItem="WUJ-5A-O7S" secondAttribute="leading" id="jRJ-xO-pyz"/>
-                                    <constraint firstItem="DW6-uo-9cM" firstAttribute="top" secondItem="WUJ-5A-O7S" secondAttribute="top" id="peF-Fe-DtE"/>
-                                    <constraint firstAttribute="trailing" secondItem="DW6-uo-9cM" secondAttribute="trailing" id="qhI-zI-2Dg"/>
-                                    <constraint firstAttribute="bottom" secondItem="DW6-uo-9cM" secondAttribute="bottom" id="sW1-79-l1q"/>
+                                    <constraint firstItem="kcM-xr-DSw" firstAttribute="leading" secondItem="WUJ-5A-O7S" secondAttribute="leading" id="I2a-Kg-TgK"/>
+                                    <constraint firstAttribute="trailing" secondItem="kcM-xr-DSw" secondAttribute="trailing" id="PxP-vF-XFQ"/>
+                                    <constraint firstAttribute="bottom" secondItem="kcM-xr-DSw" secondAttribute="bottom" id="cAk-aq-rDc"/>
+                                    <constraint firstItem="kcM-xr-DSw" firstAttribute="top" secondItem="WUJ-5A-O7S" secondAttribute="top" id="smW-vY-enC"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -103,7 +102,7 @@
                     </view>
                     <connections>
                         <outlet property="dropZone" destination="WUJ-5A-O7S" id="s0O-b3-aqO"/>
-                        <outlet property="emojiArtView" destination="DW6-uo-9cM" id="XgR-id-qHp"/>
+                        <outlet property="scrollView" destination="kcM-xr-DSw" id="48K-3c-kjh"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
