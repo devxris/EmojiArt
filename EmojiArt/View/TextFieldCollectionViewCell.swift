@@ -14,7 +14,14 @@ class TextFieldCollectionViewCell: UICollectionViewCell, UITextFieldDelegate {
 	
 	@IBOutlet weak var textField: UITextField! { didSet { textField.delegate = self } }
 	
+	// MARK: Properties (closure)
+	var resignationHandler: (() -> Void)?
+	
 	// MARK: UITextFieldDelegate
+	
+	func textFieldDidEndEditing(_ textField: UITextField) {
+		resignationHandler?() // execute closure
+	}
 	
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 		textField.resignFirstResponder()
