@@ -6,6 +6,7 @@
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -149,6 +150,54 @@
                                             <constraint firstItem="8pC-x1-N1n" firstAttribute="centerX" secondItem="hBQ-7l-Ye8" secondAttribute="centerX" id="ZGv-wv-lCr"/>
                                             <constraint firstItem="8pC-x1-N1n" firstAttribute="centerY" secondItem="hBQ-7l-Ye8" secondAttribute="centerY" id="oyn-e1-kre"/>
                                         </constraints>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="AddEmojiButtonCell" id="6fg-d1-zOW">
+                                        <rect key="frame" x="180" y="0.0" width="80" height="80"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FcV-9a-KbY">
+                                                    <rect key="frame" x="8" y="8" width="64" height="64"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="64"/>
+                                                    <state key="normal" title="+"/>
+                                                    <connections>
+                                                        <action selector="addEmoji:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Aau-AL-aLn"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstAttribute="bottomMargin" secondItem="FcV-9a-KbY" secondAttribute="bottom" id="1HO-Qa-7zx"/>
+                                            <constraint firstItem="FcV-9a-KbY" firstAttribute="leading" secondItem="6fg-d1-zOW" secondAttribute="leadingMargin" id="5Sz-2v-jkG"/>
+                                            <constraint firstItem="FcV-9a-KbY" firstAttribute="top" secondItem="6fg-d1-zOW" secondAttribute="topMargin" id="iCg-Ec-zPX"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="FcV-9a-KbY" secondAttribute="trailing" id="mzk-VH-NOk"/>
+                                        </constraints>
+                                    </collectionViewCell>
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="EmojiInputCell" id="6l5-ox-8k1" customClass="TextFieldCollectionViewCell" customModule="EmojiArt" customModuleProvider="target">
+                                        <rect key="frame" x="270" y="0.0" width="80" height="80"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                        <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO">
+                                            <rect key="frame" x="0.0" y="0.0" width="80" height="80"/>
+                                            <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="A82-6S-8iP">
+                                                    <rect key="frame" x="8" y="8" width="64" height="64"/>
+                                                    <nil key="textColor"/>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="50"/>
+                                                    <textInputTraits key="textInputTraits"/>
+                                                </textField>
+                                            </subviews>
+                                        </view>
+                                        <constraints>
+                                            <constraint firstItem="A82-6S-8iP" firstAttribute="centerY" secondItem="6l5-ox-8k1" secondAttribute="centerY" id="41e-3W-Cpu"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="A82-6S-8iP" secondAttribute="trailing" id="ZnU-Ez-3Qi"/>
+                                            <constraint firstItem="A82-6S-8iP" firstAttribute="leading" secondItem="6l5-ox-8k1" secondAttribute="leadingMargin" id="bQI-qc-KBE"/>
+                                        </constraints>
+                                        <connections>
+                                            <outlet property="textField" destination="A82-6S-8iP" id="Zb3-9a-1Np"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>

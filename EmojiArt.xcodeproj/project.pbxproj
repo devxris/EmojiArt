@@ -17,6 +17,7 @@
 		45914968200CF3CB0071D2A3 /* EmojiArtDocumentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45914967200CF3CB0071D2A3 /* EmojiArtDocumentTableViewController.swift */; };
 		4591496A200DEE570071D2A3 /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45914969200DEE570071D2A3 /* EmojiCollectionViewCell.swift */; };
 		4591496C200E01200071D2A3 /* EmojiArtView+Gestures.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4591496B200E01200071D2A3 /* EmojiArtView+Gestures.swift */; };
+		4591496E200E38BF0071D2A3 /* TextFieldCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4591496D200E38BF0071D2A3 /* TextFieldCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		45914967200CF3CB0071D2A3 /* EmojiArtDocumentTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtDocumentTableViewController.swift; sourceTree = "<group>"; };
 		45914969200DEE570071D2A3 /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
 		4591496B200E01200071D2A3 /* EmojiArtView+Gestures.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "EmojiArtView+Gestures.swift"; sourceTree = "<group>"; };
+		4591496D200E38BF0071D2A3 /* TextFieldCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,6 +91,7 @@
 				45914963200CAFD10071D2A3 /* EmojiArtView.swift */,
 				4591496B200E01200071D2A3 /* EmojiArtView+Gestures.swift */,
 				45914969200DEE570071D2A3 /* EmojiCollectionViewCell.swift */,
+				4591496D200E38BF0071D2A3 /* TextFieldCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -179,6 +182,7 @@
 				4591496C200E01200071D2A3 /* EmojiArtView+Gestures.swift in Sources */,
 				4591496A200DEE570071D2A3 /* EmojiCollectionViewCell.swift in Sources */,
 				45914962200CAF850071D2A3 /* EmojiArtViewController.swift in Sources */,
+				4591496E200E38BF0071D2A3 /* TextFieldCollectionViewCell.swift in Sources */,
 				45914966200CB34E0071D2A3 /* Utilities.swift in Sources */,
 				45914968200CF3CB0071D2A3 /* EmojiArtDocumentTableViewController.swift in Sources */,
 				45914964200CAFD10071D2A3 /* EmojiArtView.swift in Sources */,
