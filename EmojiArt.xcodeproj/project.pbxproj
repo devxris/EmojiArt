@@ -15,6 +15,7 @@
 		45914964200CAFD10071D2A3 /* EmojiArtView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45914963200CAFD10071D2A3 /* EmojiArtView.swift */; };
 		45914966200CB34E0071D2A3 /* Utilities.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45914965200CB34E0071D2A3 /* Utilities.swift */; };
 		45914968200CF3CB0071D2A3 /* EmojiArtDocumentTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45914967200CF3CB0071D2A3 /* EmojiArtDocumentTableViewController.swift */; };
+		4591496A200DEE570071D2A3 /* EmojiCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45914969200DEE570071D2A3 /* EmojiCollectionViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -28,6 +29,7 @@
 		45914963200CAFD10071D2A3 /* EmojiArtView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtView.swift; sourceTree = "<group>"; };
 		45914965200CB34E0071D2A3 /* Utilities.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Utilities.swift; sourceTree = "<group>"; };
 		45914967200CF3CB0071D2A3 /* EmojiArtDocumentTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArtDocumentTableViewController.swift; sourceTree = "<group>"; };
+		45914969200DEE570071D2A3 /* EmojiCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiCollectionViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -83,6 +85,7 @@
 				45914955200CAD690071D2A3 /* LaunchScreen.storyboard */,
 				45914950200CAD690071D2A3 /* Main.storyboard */,
 				45914963200CAFD10071D2A3 /* EmojiArtView.swift */,
+				45914969200DEE570071D2A3 /* EmojiCollectionViewCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -170,6 +173,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				4591494D200CAD690071D2A3 /* AppDelegate.swift in Sources */,
+				4591496A200DEE570071D2A3 /* EmojiCollectionViewCell.swift in Sources */,
 				45914962200CAF850071D2A3 /* EmojiArtViewController.swift in Sources */,
 				45914966200CB34E0071D2A3 /* Utilities.swift in Sources */,
 				45914968200CF3CB0071D2A3 /* EmojiArtDocumentTableViewController.swift in Sources */,

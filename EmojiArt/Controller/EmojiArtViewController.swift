@@ -10,6 +10,10 @@ import UIKit
 
 class EmojiArtViewController: UIViewController {
 	
+	// MARK: Model
+	
+	var emojis = "🍎🤣🐼🐴🏹🚘🚥🎈🛎❤️❓🇹🇼".map { String($0) }
+	
 	// MARK: Stroyboard
 	
 	@IBOutlet weak var dropZone: UIView! {
@@ -40,6 +44,13 @@ class EmojiArtViewController: UIViewController {
 	@IBOutlet weak var scrollViewHeight: NSLayoutConstraint!
 	@IBOutlet weak var scrollViewWidth: NSLayoutConstraint!
 	
+	@IBOutlet weak var emojiCollectionView: UICollectionView! {
+		didSet {
+			emojiCollectionView.dataSource = self
+			emojiCollectionView.delegate = self
+		}
+	}
+	
 	// MARK: Properties
 	
 	var imageFetcher: ImageFetcher!
@@ -62,6 +73,10 @@ class EmojiArtViewController: UIViewController {
 			}
 		}
 	}
+	
+	private var font: UIFont { // adapt accessiblity and dynamic type
+		return UIFontMetrics(forTextStyle: .body).scaledFont(for: UIFont.preferredFont(forTextStyle: .body).withSize(64.0))
+	}
 }
 
 // MARK: UIScrollViewDelegate
@@ -73,6 +88,26 @@ extension EmojiArtViewController: UIScrollViewDelegate {
 	func scrollViewDidZoom(_ scrollView: UIScrollView) {
 		scrollViewHeight.constant = scrollView.contentSize.height
 		scrollViewWidth.constant = scrollView.contentSize.width
+	}
+}
+
+// MARK: UICollectionViewDataSouce, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout
+
+extension EmojiArtViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+	
+	func numberOfSections(in collectionView: UICollectionView) -> Int { return 1 }
+	
+	func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+		return emojis.count
+	}
+	
+	func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+		let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "EmojiCell", for: indexPath)
+		if let emojiCell = cell as? EmojiCollectionViewCell {
+			let attributedText = NSAttributedString(string: emojis[indexPath.item], attributes: [.font: font])
+			emojiCell.label.attributedText = attributedText
+		}
+		return cell
 	}
 }
 
