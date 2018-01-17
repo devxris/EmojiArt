@@ -106,30 +106,42 @@ class EmojiArtViewController: UIViewController {
 	
 	/* view the document in File app, opt-in in info.plist: Supports Document Browser: Yes */ 
 	
-	@IBAction func save(_ sender: UIBarButtonItem) {
-		
-		if let json = emojiArt?.json, let jsonString = String(data: json, encoding: .utf8) {
-			// save Data object to document directory
-			if let url = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("Untitled.json") {
-				do {
-					try json.write(to: url)
-					print("Save successfully!\n\(jsonString)")
-				} catch let error {
-					print("Couldn't save: \(error)")
-				}
-			}
+	// replace to UIDocument APIs for read/write/save/close
+	var document: EmojiArtDocument?
+	
+	// save Data object to UIDocument, since autosave, use delegation from EmojiArtView to do so
+	@IBAction func save(_ sender: UIBarButtonItem? = nil) {
+		document?.emojiArt = emojiArt
+		if document?.emojiArt != nil {
+			document?.updateChangeCount(.done) // autosave
 		}
+	}
+	
+	// close UIDocument ( save before close )
+	@IBAction func close(_ sender: UIBarButtonItem) {
+		save()
+		document?.close()
 	}
 	
 	// MARK: View Life Cycles
 	
+	override func viewDidLoad() {
+		super.viewDidLoad()
+		
+		// set UIDocument to be "Untitled.json"
+		if let url = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("Untitled.json") {
+			document = EmojiArtDocument(fileURL: url)
+		}
+	}
+	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		// load Data object from document directory
-		if let url = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("Untitled.json") {
-			if let jsonData = try? Data(contentsOf: url) {
-				emojiArt = EmojiArt(json: jsonData)
+		// load Data object from UIDocument
+		document?.open { success in
+			if success {
+				self.title = self.document?.localizedName
+				self.emojiArt = self.document?.emojiArt // update model from UIDocument
 			}
 		}
 	}
