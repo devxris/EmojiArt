@@ -68,7 +68,12 @@ class EmojiArtViewController: UIViewController {
 		}
 	}
 	
-	private var emojiArtView = EmojiArtView()
+	// private var emojiArtView = EmojiArtView()
+	private lazy var emojiArtView: EmojiArtView = {
+		let eav = EmojiArtView()
+		eav.delegate = self
+		return eav
+	}()
 	
 	@IBOutlet weak var scrollView: UIScrollView! {
 		didSet {
@@ -111,7 +116,7 @@ class EmojiArtViewController: UIViewController {
 	var document: EmojiArtDocument?
 	
 	// save Data object to UIDocument, since autosave, use delegation from EmojiArtView to do so
-	@IBAction func save(_ sender: UIBarButtonItem? = nil) {
+	func documentChanged() { // also remove save UIBarButtonItem in storyboard
 		document?.emojiArt = emojiArt
 		if document?.emojiArt != nil {
 			document?.updateChangeCount(.done) // autosave
@@ -120,7 +125,6 @@ class EmojiArtViewController: UIViewController {
 	
 	// close UIDocument ( save before close )
 	@IBAction func close(_ sender: UIBarButtonItem) {
-		save()
 		if document?.emojiArt != nil {
 			document?.thumbnail = emojiArtView.snapshot
 		}
@@ -184,6 +188,15 @@ class EmojiArtViewController: UIViewController {
 	}
 	
 	private var addingEmoji = false
+}
+
+// MARK: EmojiArtViewDelegate
+
+extension EmojiArtViewController: EmojiArtViewDelegate {
+	
+	func emojiArtViewDidChange(_ sender: EmojiArtView) {
+		documentChanged()
+	}
 }
 
 // MARK: UIScrollViewDelegate

@@ -163,11 +163,6 @@
                                 <action selector="close:" destination="BYZ-38-t0r" id="VGn-uA-cYC"/>
                             </connections>
                         </barButtonItem>
-                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="hOs-wN-IfL">
-                            <connections>
-                                <action selector="save:" destination="BYZ-38-t0r" id="F7q-Kg-1Bm"/>
-                            </connections>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="dropZone" destination="WUJ-5A-O7S" id="s0O-b3-aqO"/>

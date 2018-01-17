@@ -8,11 +8,17 @@
 
 import UIKit
 
+protocol EmojiArtViewDelegate: class {
+	func emojiArtViewDidChange(_ sender: EmojiArtView)
+}
+
 class EmojiArtView: UIView {
 	
 	// MARK: Properties
 	
 	var backgroundImage: UIImage? { didSet { setNeedsDisplay() } }
+	
+	weak var delegate: EmojiArtViewDelegate?
 	
 	// MARK: Draw
 	
@@ -53,6 +59,7 @@ extension EmojiArtView: UIDropInteractionDelegate {
 			let dropPoint = session.location(in: self)
 			for attributedString in providers as? [NSAttributedString] ?? [] {
 				self.addLabel(with: attributedString, centeredAt: dropPoint)
+				self.delegate?.emojiArtViewDidChange(self)
 			}
 		}
 	}
