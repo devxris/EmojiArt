@@ -60,7 +60,7 @@ class EmojiArtViewController: UIViewController {
 		}
 	}
 	
-	// MARK: Stroyboard
+	// MARK: Storyboard
 	
 	@IBOutlet weak var dropZone: UIView! {
 		didSet {
@@ -102,6 +102,36 @@ class EmojiArtViewController: UIViewController {
 	@IBAction func addEmoji(_ sender: UIButton) {
 		addingEmoji = true
 		emojiCollectionView.reloadSections(IndexSet(integer: 0))
+	}
+	
+	/* view the document in File app, opt-in in info.plist: Supports Document Browser: Yes */ 
+	
+	@IBAction func save(_ sender: UIBarButtonItem) {
+		
+		if let json = emojiArt?.json, let jsonString = String(data: json, encoding: .utf8) {
+			// save Data object to document directory
+			if let url = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("Untitled.json") {
+				do {
+					try json.write(to: url)
+					print("Save successfully!\n\(jsonString)")
+				} catch let error {
+					print("Couldn't save: \(error)")
+				}
+			}
+		}
+	}
+	
+	// MARK: View Life Cycles
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
+		
+		// load Data object from document directory
+		if let url = try? FileManager.default.url(for: .documentDirectory, in: .userDomainMask, appropriateFor: nil, create: true).appendingPathComponent("Untitled.json") {
+			if let jsonData = try? Data(contentsOf: url) {
+				emojiArt = EmojiArt(json: jsonData)
+			}
+		}
 	}
 	
 	// MARK: Properties
