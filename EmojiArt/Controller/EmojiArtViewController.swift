@@ -8,11 +8,57 @@
 
 import UIKit
 
+extension EmojiArt.EmojiInfo { // ok to extension here because it's related to UI
+	
+	init?(label: UILabel) { // failabel initializer
+		if let attributedString = label.attributedText, let font = attributedString.font {
+			x = Int(label.center.x)
+			y = Int(label.center.y)
+			text = attributedString.string
+			size = Int(font.pointSize)
+		} else {
+			return nil
+		}
+	}
+}
+
 class EmojiArtViewController: UIViewController {
 	
 	// MARK: Model
 	
-	var emojis = "🍎🤣🐼🐴🏹🚘🚥🎈🛎❤️❓🇹🇼".map { String($0) }
+	var emojis = "🍎🤣🐼🐴🏹🚘🚥🎈🛎❤️❓🇹🇼".map { String($0) } // for UICollectionView
+	
+	var emojiArt: EmojiArt? { // a computed property to keep UI in-sync
+		get {
+			if let url = emojiBackgroundImage.url {
+				let emojis = emojiArtView.subviews.flatMap { $0 as? UILabel }
+											      .flatMap { EmojiArt.EmojiInfo(label: $0) }
+				return EmojiArt(url: url, emojis: emojis)
+			}
+			return nil
+		}
+		set {
+			// clear out contents
+			emojiBackgroundImage = (nil, nil)
+			// clear out UI
+			emojiArtView.subviews.flatMap { $0 as? UILabel }.forEach { $0.removeFromSuperview() }
+			// re-fetch url and image
+			if let url = newValue?.url {
+				imageFetcher = ImageFetcher(fetch: url) { (url, image) in
+					DispatchQueue.main.async {
+						// update contents
+						self.emojiBackgroundImage = (url, image)
+						// update UI ( add labels back )
+						newValue?.emojis.forEach {
+							let attributedText = $0.text.attributedString(withTextStyle: .body,
+																		  ofSize: CGFloat($0.size))
+							self.emojiArtView.addLabel(with: attributedText, centeredAt: CGPoint(x: $0.x, y: $0.y))
+						}
+					}
+				}
+			}
+		}
+	}
 	
 	// MARK: Stroyboard
 	
@@ -62,14 +108,17 @@ class EmojiArtViewController: UIViewController {
 	
 	var imageFetcher: ImageFetcher!
 	
-	var emojiBackgroundImage: UIImage? {
+	private var _emojiArtBackgroundImageURL: URL? // capture the imageURL
+	
+	var emojiBackgroundImage: (url: URL?, image: UIImage?) { // change from UIImage to Tuple
 		get {
-			return emojiArtView.backgroundImage
+			return (_emojiArtBackgroundImageURL, emojiArtView.backgroundImage)
 		}
 		set {
+			_emojiArtBackgroundImageURL = newValue.url
 			scrollView?.zoomScale = 1.0
-			emojiArtView.backgroundImage = newValue
-			let size = newValue?.size ?? .zero
+			emojiArtView.backgroundImage = newValue.image
+			let size = newValue.image?.size ?? .zero
 			emojiArtView.frame = CGRect(origin: .zero, size: size)
 			scrollView?.contentSize = size
 			scrollViewHeight?.constant = size.height
@@ -274,7 +323,7 @@ extension EmojiArtViewController: UIDropInteractionDelegate {
 		
 		imageFetcher = ImageFetcher() { (url, image) in // off the main queue
 			DispatchQueue.main.async {
-				self.emojiBackgroundImage = image
+				self.emojiBackgroundImage = (url, image) // fetch url and image
 			}
 		}
 		
