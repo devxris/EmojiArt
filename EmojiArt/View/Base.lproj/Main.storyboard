@@ -194,5 +194,20 @@
             </objects>
             <point key="canvasLocation" x="-742" y="13"/>
         </scene>
+        <!--Document Browser View Controller-->
+        <scene sceneID="w2c-LL-B2c">
+            <objects>
+                <viewController id="zeZ-vY-JeV" customClass="DocumentBrowserViewController" customModule="EmojiArt" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="6xL-iU-apS">
+                        <rect key="frame" x="0.0" y="0.0" width="1024" height="768"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <viewLayoutGuide key="safeArea" id="1CS-w7-31f"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F8N-Lf-X42" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-1401" y="13"/>
+        </scene>
     </scenes>
 </document>

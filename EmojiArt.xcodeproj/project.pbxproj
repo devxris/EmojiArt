@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		455984C1200F4237009B7A2B /* DocumentBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455984C0200F4237009B7A2B /* DocumentBrowserViewController.swift */; };
+		455984C3200F4240009B7A2B /* Document.swift in Sources */ = {isa = PBXBuildFile; fileRef = 455984C2200F4240009B7A2B /* Document.swift */; };
 		4591494D200CAD690071D2A3 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4591494C200CAD690071D2A3 /* AppDelegate.swift */; };
 		45914952200CAD690071D2A3 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 45914950200CAD690071D2A3 /* Main.storyboard */; };
 		45914954200CAD690071D2A3 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 45914953200CAD690071D2A3 /* Assets.xcassets */; };
@@ -22,6 +24,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		455984C0200F4237009B7A2B /* DocumentBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = DocumentBrowserViewController.swift; path = ../../../EmojiArt/EmojiArt/DocumentBrowserViewController.swift; sourceTree = "<group>"; };
+		455984C2200F4240009B7A2B /* Document.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Document.swift; sourceTree = "<group>"; };
 		45914949200CAD690071D2A3 /* EmojiArt.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = EmojiArt.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		4591494C200CAD690071D2A3 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		45914951200CAD690071D2A3 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
@@ -104,6 +108,7 @@
 			children = (
 				4591494C200CAD690071D2A3 /* AppDelegate.swift */,
 				45914967200CF3CB0071D2A3 /* EmojiArtDocumentTableViewController.swift */,
+				455984C0200F4237009B7A2B /* DocumentBrowserViewController.swift */,
 				45914961200CAF850071D2A3 /* EmojiArtViewController.swift */,
 			);
 			path = Controller;
@@ -113,6 +118,7 @@
 			isa = PBXGroup;
 			children = (
 				45914970200F19990071D2A3 /* EmojiArt.swift */,
+				455984C2200F4240009B7A2B /* Document.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -191,7 +197,9 @@
 			files = (
 				45914971200F19990071D2A3 /* EmojiArt.swift in Sources */,
 				4591494D200CAD690071D2A3 /* AppDelegate.swift in Sources */,
+				455984C1200F4237009B7A2B /* DocumentBrowserViewController.swift in Sources */,
 				4591496C200E01200071D2A3 /* EmojiArtView+Gestures.swift in Sources */,
+				455984C3200F4240009B7A2B /* Document.swift in Sources */,
 				4591496A200DEE570071D2A3 /* EmojiCollectionViewCell.swift in Sources */,
 				45914962200CAF850071D2A3 /* EmojiArtViewController.swift in Sources */,
 				4591496E200E38BF0071D2A3 /* TextFieldCollectionViewCell.swift in Sources */,
