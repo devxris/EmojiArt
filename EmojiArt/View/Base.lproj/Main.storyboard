@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Y5j-ep-7h3">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="zeZ-vY-JeV">
     <device id="ipad9_7" orientation="landscape">
         <adaptation id="fullscreen"/>
     </device>
@@ -184,7 +184,7 @@
         <!--Navigation Controller-->
         <scene sceneID="9PL-xg-Kqz">
             <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="Y5j-ep-7h3" sceneMemberID="viewController">
+                <navigationController storyboardIdentifier="DocumentMVC" automaticallyAdjustsScrollViewInsets="NO" id="Y5j-ep-7h3" sceneMemberID="viewController">
                     <toolbarItems/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="VWw-Jz-nEc">
                         <rect key="frame" x="0.0" y="20" width="1024" height="44"/>
@@ -212,7 +212,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="F8N-Lf-X42" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1401" y="13"/>
+            <point key="canvasLocation" x="-1374" y="13"/>
         </scene>
     </scenes>
 </document>
