@@ -124,7 +124,7 @@ class EmojiArtViewController: UIViewController {
 	}
 	
 	// close UIDocument ( save before close )
-	@IBAction func close(_ sender: UIBarButtonItem) {
+	@IBAction func close(_ sender: UIBarButtonItem? = nil) {
 		// remove emojiArtView observe whenever it's closed
 		if let observer = emojiArtViewObserver { NotificationCenter.default.removeObserver(observer) }
 		
@@ -232,6 +232,8 @@ class EmojiArtViewController: UIViewController {
 			}
 		}
 	}
+	
+	@IBAction func close(bySegue: UIStoryboardSegue) { close() }
 }
 
 /* replace with Notification
