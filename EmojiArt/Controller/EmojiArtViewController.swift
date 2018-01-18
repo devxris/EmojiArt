@@ -128,8 +128,11 @@ class EmojiArtViewController: UIViewController {
 		if document?.emojiArt != nil {
 			document?.thumbnail = emojiArtView.snapshot
 		}
-		document?.close { success in
-			self.presentingViewController?.dismiss(animated: true, completion: nil)
+		presentingViewController?.dismiss(animated: true) {
+			self.document?.close { (success) in
+				// remove document observer after document is closed
+				if let observer = self.documentObserver { NotificationCenter.default.removeObserver(observer) }
+			}
 		}
 	}
 	
@@ -147,6 +150,16 @@ class EmojiArtViewController: UIViewController {
 	
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
+		
+		// set document observer to obeserve document state
+		documentObserver = NotificationCenter.default.addObserver(
+			forName: NSNotification.Name.UIDocumentStateChanged,  // name of broadcaster
+			object: document,                                     // the broadcaster
+			queue: OperationQueue.main,                           // normally on the main queue
+			using: { (notification) in
+				print("document state changed to \(self.document!.documentState)")
+			}
+		)
 		
 		// load Data object from UIDocument
 		document?.open { success in
@@ -189,6 +202,8 @@ class EmojiArtViewController: UIViewController {
 	
 	private var addingEmoji = false
 	private var suppressBadURLWarning = false
+	
+	private var documentObserver: NSObjectProtocol?
 }
 
 // MARK: EmojiArtViewDelegate
