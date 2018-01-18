@@ -217,6 +217,17 @@ class EmojiArtViewController: UIViewController {
 	
 	private var documentObserver: NSObjectProtocol?
 	private var emojiArtViewObserver: NSObjectProtocol?
+	
+	// MARK: Navigations
+	
+	override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+		if segue.identifier == "ShowDocumentInfo" {
+			if let destination = segue.destination.contents as? DocumentInfoViewController {
+				document?.thumbnail = emojiArtView.snapshot 
+				destination.document = document
+			}
+		}
+	}
 }
 
 /* replace with Notification

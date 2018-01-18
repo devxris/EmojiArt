@@ -21,6 +21,7 @@
 		4591496E200E38BF0071D2A3 /* TextFieldCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4591496D200E38BF0071D2A3 /* TextFieldCollectionViewCell.swift */; };
 		45914971200F19990071D2A3 /* EmojiArt.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45914970200F19990071D2A3 /* EmojiArt.swift */; };
 		45E3F2F9200F4A4500C20BF5 /* DocumentBrowserViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3F2F8200F4A4500C20BF5 /* DocumentBrowserViewController.swift */; };
+		45E3F2FB20108BBF00C20BF5 /* DocumentInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 45E3F2FA20108BBF00C20BF5 /* DocumentInfoViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -40,6 +41,7 @@
 		4591496D200E38BF0071D2A3 /* TextFieldCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextFieldCollectionViewCell.swift; sourceTree = "<group>"; };
 		45914970200F19990071D2A3 /* EmojiArt.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmojiArt.swift; sourceTree = "<group>"; };
 		45E3F2F8200F4A4500C20BF5 /* DocumentBrowserViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DocumentBrowserViewController.swift; sourceTree = "<group>"; };
+		45E3F2FA20108BBF00C20BF5 /* DocumentInfoViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DocumentInfoViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -110,6 +112,7 @@
 				45914967200CF3CB0071D2A3 /* EmojiArtDocumentTableViewController.swift */,
 				45E3F2F8200F4A4500C20BF5 /* DocumentBrowserViewController.swift */,
 				45914961200CAF850071D2A3 /* EmojiArtViewController.swift */,
+				45E3F2FA20108BBF00C20BF5 /* DocumentInfoViewController.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -205,6 +208,7 @@
 				4591496E200E38BF0071D2A3 /* TextFieldCollectionViewCell.swift in Sources */,
 				45914966200CB34E0071D2A3 /* Utilities.swift in Sources */,
 				45914968200CF3CB0071D2A3 /* EmojiArtDocumentTableViewController.swift in Sources */,
+				45E3F2FB20108BBF00C20BF5 /* DocumentInfoViewController.swift in Sources */,
 				45914964200CAFD10071D2A3 /* EmojiArtView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
