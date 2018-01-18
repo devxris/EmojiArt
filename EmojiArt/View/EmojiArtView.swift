@@ -43,6 +43,17 @@ class EmojiArtView: UIView {
 	private func setup() {
 		addInteraction(UIDropInteraction(delegate: self))
 	}
+	
+	// MARK: View Life Cycles
+	
+	private var labelObservation = [UIView: NSKeyValueObservation]()
+
+	override func willRemoveSubview(_ subview: UIView) {
+		super.willRemoveSubview(subview)
+		if labelObservation[subview] != nil {
+			labelObservation[subview] = nil
+		}
+	}
 }
 
 // MARK: UIDropInteractionDelegate
@@ -78,5 +89,10 @@ extension EmojiArtView: UIDropInteractionDelegate {
 		label.center = point
 		addEmojiArtGestureRecognizers(to: label)
 		addSubview(label)
+		// add KVO observation for label center changed
+		labelObservation[label] = label.observe(\.center) { (label, change) in
+			self.delegate?.emojiArtViewDidChange(self)
+			NotificationCenter.default.post( name: .EmojiArtViewDidChange, object: self)
+		}
 	}
 }
