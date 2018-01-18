@@ -188,6 +188,7 @@ class EmojiArtViewController: UIViewController {
 	}
 	
 	private var addingEmoji = false
+	private var suppressBadURLWarning = false
 }
 
 // MARK: EmojiArtViewDelegate
@@ -389,15 +390,41 @@ extension EmojiArtViewController: UIDropInteractionDelegate {
 			}
 		}
 		
-		session.loadObjects(ofClass: NSURL.self) { (nsurls) in
+		session.loadObjects(ofClass: NSURL.self) { (nsurls) in // on the main queue
 			if let url = nsurls.first as? URL {
-				self.imageFetcher.fetch(url)
+				// self.imageFetcher.fetch(url)
+				
+				// fetch image directly without ImageFetcher()
+				DispatchQueue.global(qos: .userInitiated).async {
+					if let imageData = try? Data(contentsOf: url.imageURL), let image = UIImage(data: imageData) {
+						DispatchQueue.main.async {
+							self.emojiBackgroundImage = (url, image)
+							self.documentChanged()
+						}
+					} else {
+						self.presentBadURLWarning(url: url)
+					}
+				}
 			}
 		}
 		session.loadObjects(ofClass: UIImage.self) { (images) in
 			if let image = images.first as? UIImage {
 				self.imageFetcher.backup = image
 			}
+		}
+	}
+	
+	private func presentBadURLWarning(url: URL?) {
+		if !suppressBadURLWarning {
+			let alert = UIAlertController(
+				title: "Image Transfer Failed",
+				message: "Couldn't trasfer the dropped image from its source\nShow this warning in the future?",
+				preferredStyle: .alert)
+			alert.addAction(UIAlertAction(title: "Keep Warning", style: .default))
+			alert.addAction(UIAlertAction(title: "Stop Warning", style: .destructive) { (action) in
+				self.suppressBadURLWarning = true
+			})
+			present(alert, animated: true)
 		}
 	}
 }
