@@ -139,6 +139,10 @@ class EmojiArtViewController: UIViewController {
 		}
 	}
 	
+	@IBOutlet weak var embeddedDocInfoHeight: NSLayoutConstraint!
+	@IBOutlet weak var embeddedDocInfoWidth: NSLayoutConstraint!
+	private var embeddedDocumentInfo: DocumentInfoViewController? // to track in Embed segue
+	
 	// MARK: View Life Cycles
 	
 	/*
@@ -161,6 +165,16 @@ class EmojiArtViewController: UIViewController {
 			queue: OperationQueue.main,                           // normally on the main queue
 			using: { (notification) in
 				print("document state changed to \(self.document!.documentState)")
+				
+				// update Embed document info
+				if self.document!.documentState == .normal, let docInfoVC = self.embeddedDocumentInfo {
+					// set its model
+					docInfoVC.document = self.document
+					// optimized its outlook
+					self.embeddedDocInfoWidth.constant = docInfoVC.preferredContentSize.width
+					self.embeddedDocInfoHeight.constant = docInfoVC.preferredContentSize.height
+					// also set view to clear and disable user interaction in storyboard
+				}
 			}
 		)
 		
@@ -230,6 +244,8 @@ class EmojiArtViewController: UIViewController {
 					ppc.delegate = self
 				}
 			}
+		} else if segue.identifier == "EmbedDocumentInfo" {
+			embeddedDocumentInfo = segue.destination.contents as? DocumentInfoViewController
 		}
 	}
 	
