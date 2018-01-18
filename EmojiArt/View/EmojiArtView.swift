@@ -8,6 +8,10 @@
 
 import UIKit
 
+extension Notification.Name {
+	static let EmojiArtViewDidChange = Notification.Name("EmojiArtViewDidChange")
+}
+
 protocol EmojiArtViewDelegate: class {
 	func emojiArtViewDidChange(_ sender: EmojiArtView)
 }
@@ -60,6 +64,8 @@ extension EmojiArtView: UIDropInteractionDelegate {
 			for attributedString in providers as? [NSAttributedString] ?? [] {
 				self.addLabel(with: attributedString, centeredAt: dropPoint)
 				self.delegate?.emojiArtViewDidChange(self)
+				// good to set custom Notification.Name by extension
+				NotificationCenter.default.post( name: .EmojiArtViewDidChange, object: self)
 			}
 		}
 	}

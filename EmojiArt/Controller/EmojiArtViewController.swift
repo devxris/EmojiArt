@@ -68,12 +68,12 @@ class EmojiArtViewController: UIViewController {
 		}
 	}
 	
-	// private var emojiArtView = EmojiArtView()
-	private lazy var emojiArtView: EmojiArtView = {
-		let eav = EmojiArtView()
-		eav.delegate = self
-		return eav
-	}()
+	private var emojiArtView = EmojiArtView()
+//	private lazy var emojiArtView: EmojiArtView = {
+//		let eav = EmojiArtView()
+//		eav.delegate = self
+//		return eav
+//	}()
 	
 	@IBOutlet weak var scrollView: UIScrollView! {
 		didSet {
@@ -125,6 +125,9 @@ class EmojiArtViewController: UIViewController {
 	
 	// close UIDocument ( save before close )
 	@IBAction func close(_ sender: UIBarButtonItem) {
+		// remove emojiArtView observe whenever it's closed
+		if let observer = emojiArtViewObserver { NotificationCenter.default.removeObserver(observer) }
+		
 		if document?.emojiArt != nil {
 			document?.thumbnail = emojiArtView.snapshot
 		}
@@ -166,6 +169,15 @@ class EmojiArtViewController: UIViewController {
 			if success {
 				self.title = self.document?.localizedName
 				self.emojiArt = self.document?.emojiArt // update model from UIDocument
+				// observe EmojiArtView changed
+				self.emojiArtViewObserver = NotificationCenter.default.addObserver(
+					forName: .EmojiArtViewDidChange,
+					object: self.emojiArtView,
+					queue: OperationQueue.main, // could be nil here
+					using: { (notification) in
+						self.documentChanged()
+					}
+				)
 			}
 		}
 	}
@@ -204,8 +216,10 @@ class EmojiArtViewController: UIViewController {
 	private var suppressBadURLWarning = false
 	
 	private var documentObserver: NSObjectProtocol?
+	private var emojiArtViewObserver: NSObjectProtocol?
 }
 
+/* replace with Notification
 // MARK: EmojiArtViewDelegate
 
 extension EmojiArtViewController: EmojiArtViewDelegate {
@@ -213,7 +227,7 @@ extension EmojiArtViewController: EmojiArtViewDelegate {
 	func emojiArtViewDidChange(_ sender: EmojiArtView) {
 		documentChanged()
 	}
-}
+} */
 
 // MARK: UIScrollViewDelegate
 
