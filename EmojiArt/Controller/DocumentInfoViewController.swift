@@ -12,17 +12,21 @@ class DocumentInfoViewController: UIViewController {
 	
 	// MARK: Model
 	
-	var document: EmojiArtDocument? {
-		didSet {
-			updateUI()
-		}
-	}
+	var document: EmojiArtDocument? { didSet { updateUI() } }
 	
 	// MARK: ViewController Life Cycles
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		updateUI()
+	}
+	
+	// a good place to put preferredContentSize because it's related to geomerty change
+	override func viewDidLayoutSubviews() {
+		super.viewDidLayoutSubviews()
+		if let fittedSize = topLevelView?.sizeThatFits(UILayoutFittingCompressedSize) {
+			preferredContentSize = CGSize(width: fittedSize.width + 30, height: fittedSize.height + 30) // padding
+		}
 	}
 	
 	// MARK: Private funcs & properties
@@ -63,6 +67,12 @@ class DocumentInfoViewController: UIViewController {
 				thumbnailImageView.addConstraint(thumbnailAspectRatio)
 			}
 		}
+		// optimize outlook of popover in iPad ( not adapt on iPhone which needs a delegate )
+		if presentationController is UIPopoverPresentationController {
+			thumbnailImageView?.isHidden = true
+			returnToDocumentButton?.isHidden = true
+			view.backgroundColor = .clear
+		}
 	}
 
 	// MARK: Storyboard
@@ -70,7 +80,10 @@ class DocumentInfoViewController: UIViewController {
 	@IBOutlet weak var thumbnailImageView: UIImageView!
 	@IBOutlet weak var sizeLabel: UILabel!
 	@IBOutlet weak var createdLabel: UILabel!
+	@IBOutlet weak var returnToDocumentButton: UIButton!
+	
 	@IBOutlet weak var thumbnailAspectRatio: NSLayoutConstraint! // it's multiplier, so need to modify itself
+	@IBOutlet weak var topLevelView: UIStackView!
 	
 	@IBAction func done() { presentingViewController?.dismiss(animated: true) }
 }

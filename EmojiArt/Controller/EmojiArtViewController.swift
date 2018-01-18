@@ -225,6 +225,10 @@ class EmojiArtViewController: UIViewController {
 			if let destination = segue.destination.contents as? DocumentInfoViewController {
 				document?.thumbnail = emojiArtView.snapshot 
 				destination.document = document
+				// adapt popover on iPhone as well and impement delegate method
+				if let ppc = destination.popoverPresentationController {
+					ppc.delegate = self
+				}
 			}
 		}
 	}
@@ -466,5 +470,15 @@ extension EmojiArtViewController: UIDropInteractionDelegate {
 			})
 			present(alert, animated: true)
 		}
+	}
+}
+
+// MARK: UIPopoverPresentationControllerDelegate
+
+extension EmojiArtViewController: UIPopoverPresentationControllerDelegate {
+	
+	// adapt popover on iPhone as well and impement delegate method
+	func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
+		return .none // not adapt 
 	}
 }
