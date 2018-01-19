@@ -15,7 +15,8 @@ struct EmojiArt: Codable {
 	
 	// MARK: Properties
 	
-	var url: URL
+	var url: URL?
+	var imageData: Data?
 	var emojis = [EmojiInfo]()
 	
 	struct EmojiInfo: Codable {
@@ -48,5 +49,11 @@ struct EmojiArt: Codable {
 		} else {
 			return nil
 		}
+	}
+	
+	// for image took from camera
+	init(imageData: Data, emojis: [EmojiInfo]) {
+		self.imageData = imageData
+		self.emojis = emojis
 	}
 }
