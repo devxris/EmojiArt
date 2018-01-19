@@ -191,9 +191,15 @@
                                     </segue>
                                 </connections>
                             </barButtonItem>
+                            <barButtonItem systemItem="camera" id="7lo-F1-HgI">
+                                <connections>
+                                    <action selector="takeBackgroundPhoto:" destination="BYZ-38-t0r" id="GzL-ly-FXb"/>
+                                </connections>
+                            </barButtonItem>
                         </rightBarButtonItems>
                     </navigationItem>
                     <connections>
+                        <outlet property="cameraButton" destination="7lo-F1-HgI" id="ygk-Sn-LdD"/>
                         <outlet property="dropZone" destination="WUJ-5A-O7S" id="s0O-b3-aqO"/>
                         <outlet property="embeddedDocInfoHeight" destination="7S3-75-ewf" id="W0J-Ce-Jkg"/>
                         <outlet property="embeddedDocInfoWidth" destination="Rln-Qo-xCH" id="p9R-MA-8Ns"/>
@@ -390,6 +396,7 @@
                             <constraint firstItem="rXq-yp-Ure" firstAttribute="centerY" secondItem="Lh5-j6-1JF" secondAttribute="centerY" id="cTm-dm-HKQ"/>
                             <constraint firstItem="rXq-yp-Ure" firstAttribute="centerX" secondItem="Lh5-j6-1JF" secondAttribute="centerX" id="nEL-fC-Ryh"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="lju-x2-kfQ"/>
                     </view>
                     <connections>
                         <outlet property="createdLabel" destination="tQk-RZ-B0b" id="2ob-iE-Pzb"/>

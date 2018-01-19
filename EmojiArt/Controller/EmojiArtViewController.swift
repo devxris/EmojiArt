@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import MobileCoreServices
 
 extension EmojiArt.EmojiInfo { // ok to extension here because it's related to UI
 	
@@ -143,6 +144,21 @@ class EmojiArtViewController: UIViewController {
 	@IBOutlet weak var embeddedDocInfoWidth: NSLayoutConstraint!
 	private var embeddedDocumentInfo: DocumentInfoViewController? // to track in Embed segue
 	
+	@IBOutlet weak var cameraButton: UIBarButtonItem! {
+		didSet {
+			cameraButton.isEnabled = UIImagePickerController.isSourceTypeAvailable(.camera)
+		}
+	}
+	
+	@IBAction func takeBackgroundPhoto(_ sender: UIBarButtonItem) {
+		let picker = UIImagePickerController()
+		picker.sourceType = .camera
+		picker.mediaTypes = [kUTTypeImage as String] // import MobileCoreService
+		picker.allowsEditing = true
+		picker.delegate = self
+		present(picker, animated: true)
+	}
+	
 	// MARK: View Life Cycles
 	
 	/*
@@ -158,40 +174,42 @@ class EmojiArtViewController: UIViewController {
 	override func viewWillAppear(_ animated: Bool) {
 		super.viewWillAppear(animated)
 		
-		// set document observer to obeserve document state
-		documentObserver = NotificationCenter.default.addObserver(
-			forName: NSNotification.Name.UIDocumentStateChanged,  // name of broadcaster
-			object: document,                                     // the broadcaster
-			queue: OperationQueue.main,                           // normally on the main queue
-			using: { (notification) in
-				print("document state changed to \(self.document!.documentState)")
-				
-				// update Embed document info
-				if self.document!.documentState == .normal, let docInfoVC = self.embeddedDocumentInfo {
-					// set its model
-					docInfoVC.document = self.document
-					// optimized its outlook
-					self.embeddedDocInfoWidth.constant = docInfoVC.preferredContentSize.width
-					self.embeddedDocInfoHeight.constant = docInfoVC.preferredContentSize.height
-					// also set view to clear and disable user interaction in storyboard
-				}
-			}
-		)
-		
-		// load Data object from UIDocument
-		document?.open { success in
-			if success {
-				self.title = self.document?.localizedName
-				self.emojiArt = self.document?.emojiArt // update model from UIDocument
-				// observe EmojiArtView changed
-				self.emojiArtViewObserver = NotificationCenter.default.addObserver(
-					forName: .EmojiArtViewDidChange,
-					object: self.emojiArtView,
-					queue: OperationQueue.main, // could be nil here
-					using: { (notification) in
-						self.documentChanged()
+		if document?.documentState != .normal { // fix with UIImagePickerController
+			// set document observer to obeserve document state
+			documentObserver = NotificationCenter.default.addObserver(
+				forName: NSNotification.Name.UIDocumentStateChanged,  // name of broadcaster
+				object: document,                                     // the broadcaster
+				queue: OperationQueue.main,                           // normally on the main queue
+				using: { (notification) in
+					print("document state changed to \(self.document!.documentState)")
+					
+					// update Embed document info
+					if self.document!.documentState == .normal, let docInfoVC = self.embeddedDocumentInfo {
+						// set its model
+						docInfoVC.document = self.document
+						// optimized its outlook
+						self.embeddedDocInfoWidth.constant = docInfoVC.preferredContentSize.width
+						self.embeddedDocInfoHeight.constant = docInfoVC.preferredContentSize.height
+						// also set view to clear and disable user interaction in storyboard
 					}
-				)
+			}
+			)
+			
+			// load Data object from UIDocument
+			document?.open { success in
+				if success {
+					self.title = self.document?.localizedName
+					self.emojiArt = self.document?.emojiArt // update model from UIDocument
+					// observe EmojiArtView changed
+					self.emojiArtViewObserver = NotificationCenter.default.addObserver(
+						forName: .EmojiArtViewDidChange,
+						object: self.emojiArtView,
+						queue: OperationQueue.main, // could be nil here
+						using: { (notification) in
+							self.documentChanged()
+					}
+					)
+				}
 			}
 		}
 	}
@@ -498,5 +516,24 @@ extension EmojiArtViewController: UIPopoverPresentationControllerDelegate {
 	// adapt popover on iPhone as well and impement delegate method
 	func adaptivePresentationStyle(for controller: UIPresentationController, traitCollection: UITraitCollection) -> UIModalPresentationStyle {
 		return .none // not adapt 
+	}
+}
+
+// MARK: UIImagePickerControllerDelegate
+
+extension EmojiArtViewController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+	
+	// Be aware of viewController life cycle
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+		if let image = ((info[UIImagePickerControllerEditedImage] ?? info[UIImagePickerControllerOriginalImage]) as? UIImage)?.scaled(by: 0.25) {
+			// create a url with image created date but not good ( can't store in iCloud )
+			let url = image.storeLocallyAsJPEG(named: String(Date.timeIntervalSinceReferenceDate))
+			emojiBackgroundImage = (url, image)
+			documentChanged()
+		}
+	}
+	
+	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+		picker.presentingViewController?.dismiss(animated: true) // more explicit even its self
 	}
 }
